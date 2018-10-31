@@ -1,0 +1,89 @@
+<!-- Logback configuration. See http://logback.qos.ch/manual/index.html -->
+<configuration scan="true" scanPeriod="10 seconds">
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+
+    <contextName>snake</contextName>
+    <property name="LOG_PATH" value="D:\\JavaWebLogs" />
+    <!--设置系统日志目录-->
+    <property name="APPDIR" value="snake" />
+
+    <!--&lt;!&ndash; 控制台输出 &ndash;&gt;-->
+    <!--<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">-->
+        <!--<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">-->
+            <!--&lt;!&ndash;格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符&ndash;&gt;-->
+            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>-->
+        <!--</encoder>-->
+    <!--</appender>-->
+
+    <!-- 按照每天生成日志文件 -->
+    <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_PATH}/info.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <fileNamePattern>${LOG_PATH}/info-%d{yyyyMMdd}.log.%i</fileNamePattern>
+            <!--日志文件最大容量-->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>500MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!--日志文件保留天数-->
+            <maxHistory>2</maxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <File>${LOG_PATH}/error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <fileNamePattern>${LOG_PATH}/error-%d{yyyyMMdd}.log.%i</fileNamePattern>
+            <!--日志文件最大容量-->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>500MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!--日志文件保留天数-->
+            <maxHistory>2</maxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <!-- hibernate日志输入 -->
+    <!--<logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" />-->
+    <!--<logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="TRACE" />-->
+    <!--<logger name="org.hibernate.SQL" level="INFO" />-->
+    <!--<logger name="org.hibernate.engine.QueryParameters" level="INFO" />-->
+    <!--<logger name="org.hibernate.engine.query.HQLQueryPlan" level="INFO" />-->
+
+    <!--myibatis log configure-->
+    <!--<logger name="com.apache.ibatis" level="TRACE"/>-->
+    <!--<logger name="java.sql.Connection" level="DEBUG"/>-->
+    <!--<logger name="java.sql.Statement" level="DEBUG"/>-->
+    <!--<logger name="java.sql.PreparedStatement" level="DEBUG"/>-->
+
+    <!--日志异步到数据库 -->
+    <!--<appender name="DB" class="ch.qos.logback.classic.db.DBAppender">-->
+    <!--&lt;!&ndash;日志异步到数据库 &ndash;&gt;-->
+    <!--<connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">-->
+    <!--&lt;!&ndash;连接池 &ndash;&gt;-->
+    <!--<dataSource class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+    <!--<driverClass>com.mysql.jdbc.Driver</driverClass>-->
+    <!--<url>jdbc:mysql://127.0.0.1:3306/databaseName</url>-->
+    <!--<user>root</user>-->
+    <!--<password>root</password>-->
+    <!--</dataSource>-->
+    <!--</connectionSource>-->
+    <!--</appender>-->
+
+    <root level="INFO">
+        <!--<appender-ref ref="STDOUT" />-->
+        <appender-ref ref="INFO_FILE" />
+        <appender-ref ref="ERROR_FILE" />
+    </root>
+
+</configuration>

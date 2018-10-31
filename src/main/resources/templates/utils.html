@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Crawler.Utils</title>
+</head>
+<body>
+
+<th:block th:if="${id}!=null">
+    <th:block th:each="item:${id}">
+        <a th:href="${name}" th:text="${age}"></a>
+    </th:block>
+</th:block>
+
+
+</body>
+</html>
